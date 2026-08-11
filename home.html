@@ -185,12 +185,13 @@
             background: var(--surface);
         }
 
-        .photo-frame img {
+        .photo-frame video {
             width: 100%;
             display: block;
             aspect-ratio: 4 / 5;
             object-fit: cover;
         }
+
 
         .photo-frame::after {
             content: '';
@@ -505,7 +506,10 @@
 
             <div class="hero-photo">
                 <div class="photo-frame">
-                    <img src="images/shrenik.jpg" alt="Shrenik Balaji performing live" />
+                    <video autoplay muted loop playsinline>
+                        <source src="images/live.MP4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
 
                     <div class="photo-label">
                         <span>Live Performance</span>
