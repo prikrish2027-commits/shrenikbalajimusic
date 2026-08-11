@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <style>
     *,
@@ -22,16 +22,16 @@
     }
 
     :root {
-      --bg:       #F6F1E7;
-      --surface:  #FFFDF8;
-      --border:   #D9D4C8;
-      --gold:     #D96B2B;
-      --gold-dim: #B85F2A;
-      --green:    #8FA77D;
-      --text:     #24352A;
-      --muted:    #667066;
-      --tag-bg:   #E8E3D8;
-      --radius:   6px;
+      --bg: #F6F1E7;
+      --surface: #FFFDF8;
+      --border: #D9D4C8;
+      --gold: #2F5D3A;
+      --gold-dim: #23482D;
+      --green: #8FA77D;
+      --text: #24352A;
+      --muted: #667066;
+      --tag-bg: #E8E3D8;
+      --radius: 6px;
     }
 
     html {
@@ -469,7 +469,7 @@
     <a class="nav-logo" href="home.html">
       Shrenik <span>Balaji</span>
     </a>
-  
+
     <ul class="nav-links">
       <li><a href="home.html">Home</a></li>
       <li><a href="calendar.html">Calendar</a></li>
@@ -478,7 +478,7 @@
       <li><a href="request-list.html" class="active">Request List</a></li>
     </ul>
   </nav>
-  
+
   <section class="hero">
     <div class="hero-eyebrow">Live Performances</div>
 
@@ -502,11 +502,7 @@
 
       <p>
         Head to
-        <a
-          href="https://account.venmo.com/u/Shrenik-Balaji"
-          target="_blank"
-          rel="noopener"
-        >@Shrenik-Balaji on Venmo</a>
+        <a href="https://account.venmo.com/u/Shrenik-Balaji" target="_blank" rel="noopener">@Shrenik-Balaji on Venmo</a>
         and include your song request in the payment note.
       </p>
     </div>
@@ -533,27 +529,13 @@
       </h2>
 
       <div class="search-wrap">
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.35-4.35"/>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
         </svg>
 
-        <input
-          type="text"
-          id="search"
-          placeholder="Search artists or songs…"
-          autocomplete="off"
-          spellcheck="false"
-        />
+        <input type="text" id="search" placeholder="Search artists or songs…" autocomplete="off" spellcheck="false" />
       </div>
     </div>
 
@@ -574,90 +556,100 @@
     <a href="#">shrenikbalajimusic.com</a>
   </footer>
 
-<script>
-const SONGS = [
-  { artist: "The Killers", songs: ["Mr. Brightside", "Somebody Told Me"] }, 
-  { artist: "Luke Combs", songs: ["When It Rains It Pours", "Fast Car"] },
-  { artist: "Zac Brown Band", songs: ["Colder Weather", "Knee Deep", "Chicken Fried"] },
-  { artist: "Zach Bryan", songs: ["Something in the Orange"] },
-];
+  <script>
+    const SONGS = [{
+        artist: "The Killers",
+        songs: ["Mr. Brightside", "Somebody Told Me"]
+      },
+      {
+        artist: "Luke Combs",
+        songs: ["When It Rains It Pours", "Fast Car"]
+      },
+      {
+        artist: "Zac Brown Band",
+        songs: ["Colder Weather", "Knee Deep", "Chicken Fried"]
+      },
+      {
+        artist: "Zach Bryan",
+        songs: ["Something in the Orange"]
+      },
+    ];
 
-// Total song count
-const totalSongs = SONGS.reduce(
-  (total, group) => total + group.songs.length,
-  0
-);
+    // Total song count
+    const totalSongs = SONGS.reduce(
+      (total, group) => total + group.songs.length,
+      0
+    );
 
-document.getElementById('total-label').textContent =
-  `— ${SONGS.length} artists · ${totalSongs} songs`;
+    document.getElementById('total-label').textContent =
+      `— ${SONGS.length} artists · ${totalSongs} songs`;
 
-document.getElementById('yr').textContent =
-  new Date().getFullYear();
+    document.getElementById('yr').textContent =
+      new Date().getFullYear();
 
-const listEl = document.getElementById('song-list');
-const searchEl = document.getElementById('search');
-const emptyEl = document.getElementById('empty');
-const resultEl = document.getElementById('result-info');
+    const listEl = document.getElementById('song-list');
+    const searchEl = document.getElementById('search');
+    const emptyEl = document.getElementById('empty');
+    const resultEl = document.getElementById('result-info');
 
-function esc(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
+    function esc(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
 
-function highlight(str, q) {
-  if (!q) return esc(str);
+    function highlight(str, q) {
+      if (!q) return esc(str);
 
-  const re = new RegExp(
-    `(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`,
-    'gi'
-  );
+      const re = new RegExp(
+        `(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`,
+        'gi'
+      );
 
-  return esc(str).replace(re, '<mark>$1</mark>');
-}
+      return esc(str).replace(re, '<mark>$1</mark>');
+    }
 
-function render(query) {
-  const q = query.trim().toLowerCase();
+    function render(query) {
+      const q = query.trim().toLowerCase();
 
-  listEl.innerHTML = '';
+      listEl.innerHTML = '';
 
-  let totalVisible = 0;
-  let artistsVisible = 0;
+      let totalVisible = 0;
+      let artistsVisible = 0;
 
-  SONGS.forEach(group => {
-    const artistMatch =
-      !q || group.artist.toLowerCase().includes(q);
+      SONGS.forEach(group => {
+        const artistMatch = !q || group.artist.toLowerCase().includes(q);
 
-    const filteredSongs = q
-      ? group.songs.filter(
-          song =>
+        const filteredSongs = q ?
+          group.songs.filter(
+            song =>
             song.toLowerCase().includes(q) ||
             artistMatch
-        )
-      : group.songs;
+          ) :
+          group.songs;
 
-    if (!filteredSongs.length && !artistMatch) return;
+        if (!filteredSongs.length && !artistMatch) return;
 
-    const showSongs = artistMatch
-      ? group.songs
-      : filteredSongs;
+        const showSongs = artistMatch ?
+          group.songs :
+          filteredSongs;
 
-    if (!showSongs.length) return;
+        if (!showSongs.length) return;
 
-    totalVisible += showSongs.length;
-    artistsVisible++;
+        totalVisible += showSongs.length;
+        artistsVisible++;
 
-    const groupEl = document.createElement('div');
+        const groupEl = document.createElement('div');
 
-    groupEl.className =
-      'artist-group' + (q ? ' open' : '');
+        groupEl.className =
+          'artist-group' + (q ? ' open' : '');
 
-    const header = document.createElement('div');
+        const header = document.createElement('div');
 
-    header.className = 'artist-header';
+        header.className = 'artist-header';
 
-    header.innerHTML = `
+        header.innerHTML = `
       <span class="artist-name">
         ${highlight(group.artist, q)}
       </span>
@@ -682,56 +674,57 @@ function render(query) {
       </svg>
     `;
 
-    header.addEventListener('click', () => {
-      groupEl.classList.toggle('open');
-    });
+        header.addEventListener('click', () => {
+          groupEl.classList.toggle('open');
+        });
 
-    const songsEl = document.createElement('div');
+        const songsEl = document.createElement('div');
 
-    songsEl.className = 'songs-list';
+        songsEl.className = 'songs-list';
 
-    showSongs.forEach(song => {
-      const item = document.createElement('div');
+        showSongs.forEach(song => {
+          const item = document.createElement('div');
 
-      item.className = 'song-item';
+          item.className = 'song-item';
 
-      item.innerHTML = `
+          item.innerHTML = `
         <span class="song-dot"></span>
         <span class="song-title">
           ${highlight(song, q)}
         </span>
       `;
 
-      songsEl.appendChild(item);
+          songsEl.appendChild(item);
+        });
+
+        groupEl.appendChild(header);
+        groupEl.appendChild(songsEl);
+
+        listEl.appendChild(groupEl);
+      });
+
+      emptyEl.style.display =
+        artistsVisible === 0 ? 'block' : 'none';
+
+      if (q && artistsVisible > 0) {
+        resultEl.innerHTML =
+          `<em>${totalVisible}</em> song` +
+          `${totalVisible !== 1 ? 's' : ''} across ` +
+          `<em>${artistsVisible}</em> artist` +
+          `${artistsVisible !== 1 ? 's' : ''} matching ` +
+          `"<em>${esc(query.trim())}</em>"`;
+      } else {
+        resultEl.innerHTML = '';
+      }
+    }
+
+    searchEl.addEventListener('input', () => {
+      render(searchEl.value);
     });
 
-    groupEl.appendChild(header);
-    groupEl.appendChild(songsEl);
-
-    listEl.appendChild(groupEl);
-  });
-
-  emptyEl.style.display =
-    artistsVisible === 0 ? 'block' : 'none';
-
-  if (q && artistsVisible > 0) {
-    resultEl.innerHTML =
-      `<em>${totalVisible}</em> song` +
-      `${totalVisible !== 1 ? 's' : ''} across ` +
-      `<em>${artistsVisible}</em> artist` +
-      `${artistsVisible !== 1 ? 's' : ''} matching ` +
-      `"<em>${esc(query.trim())}</em>"`;
-  } else {
-    resultEl.innerHTML = '';
-  }
-}
-
-searchEl.addEventListener('input', () => {
-  render(searchEl.value);
-});
-
-render('');
-</script>
+    render('');
+  </script>
 
 </body>
+
 </html>

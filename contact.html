@@ -23,8 +23,8 @@
       --bg: #F6F1E7;
       --surface: #FFFDF8;
       --border: #D9D4C8;
-      --gold: #D96B2B;
-      --gold-dim: #B85F2A;
+      --gold: #2F5D3A;
+      --gold-dim: #23482D;
       --green: #8FA77D;
       --text: #24352A;
       --muted: #667066;
@@ -416,11 +416,11 @@
 
       <ul class="detail-list">
         <li>Type of event — private, public (hotel, restaurant/bar, etc.)</li>
-        <li>Solo, Duo, or Band booking</li>
+        <li>Solo or Band booking</li>
         <li>Any special requests or notes for the performance</li>
       </ul>
       <!-- REPLACE YOUR_FORM_ID with the actual form id from formspree.io -->
-      <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST"> 
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
         <div class="form-row">
           <div class="field">
             <label for="fname">First Name</label>
@@ -473,7 +473,6 @@
             <select id="booking" name="booking_type" required>
               <option value="" disabled selected>Select…</option>
               <option>Solo</option>
-              <option>Duo</option>
               <option>Band</option>
             </select>
           </div>
