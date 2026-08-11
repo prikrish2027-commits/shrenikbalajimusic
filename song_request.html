@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request List — Shrenik Balaji</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:       #F6F1E7;
+      --surface:  #FFFDF8;
+      --border:   #D9D4C8;
+      --gold:     #D96B2B;
+      --gold-dim: #B85F2A;
+      --green:    #8FA77D;
+      --text:     #24352A;
+      --muted:    #667066;
+      --tag-bg:   #E8E3D8;
+      --radius:   6px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 241, 231, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 32px 48px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── REQUEST METHODS ── */
+    .methods {
+      max-width: 900px;
+      margin: 0 auto 56px;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .method-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .method-card:hover {
+      border-color: var(--gold-dim);
+      box-shadow: 0 4px 18px rgba(36, 53, 42, 0.06);
+    }
+
+    .method-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .method-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 12px;
+      user-select: none;
+    }
+
+    .method-card h3 {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .method-card p {
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .method-card a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      transition: border-color 0.2s;
+    }
+
+    .method-card a:hover {
+      border-color: var(--gold);
+    }
+
+    /* ── SONG LIST SECTION ── */
+    .list-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .list-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .list-header h2 span {
+      font-size: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-left: 10px;
+    }
+
+    /* ── SEARCH ── */
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    #search {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      padding: 10px 14px 10px 40px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    #search::placeholder {
+      color: var(--muted);
+    }
+
+    #search:focus {
+      border-color: var(--gold-dim);
+      box-shadow: 0 0 0 3px rgba(217, 107, 43, 0.08);
+    }
+
+    /* ── ARTIST GROUPS ── */
+    #song-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .artist-group {
+      border-radius: var(--radius);
+    }
+
+    .artist-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 10px 6px;
+      cursor: pointer;
+      border-top: 1px solid var(--border);
+      user-select: none;
+      transition: background 0.15s;
+    }
+
+    .artist-header:hover {
+      background: rgba(232, 227, 216, 0.45);
+    }
+
+    .artist-header:hover .artist-name {
+      color: var(--gold);
+    }
+
+    .artist-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: color 0.18s;
+      flex: 1;
+    }
+
+    .artist-count {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      background: var(--tag-bg);
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .artist-chevron {
+      color: var(--muted);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    .artist-group.open .artist-chevron {
+      transform: rotate(90deg);
+    }
+
+    .songs-list {
+      display: none;
+      padding: 4px 0 16px 14px;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .artist-group.open .songs-list {
+      display: flex;
+    }
+
+    .song-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: var(--radius);
+      cursor: default;
+      transition: background 0.15s;
+    }
+
+    .song-item:hover {
+      background: var(--tag-bg);
+    }
+
+    .song-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .song-title {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /* ── EMPTY STATE ── */
+    #empty {
+      display: none;
+      text-align: center;
+      padding: 56px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    #empty strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    /* ── RESULT COUNT ── */
+    #result-info {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      min-height: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    #result-info em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    footer a {
+      color: var(--gold-dim);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--gold);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 48px 20px 36px;
+      }
+
+      .methods {
+        padding: 0 20px;
+        grid-template-columns: 1fr;
+      }
+
+      .list-section {
+        padding: 0 20px 60px;
+      }
+
+      .list-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-wrap {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    /* ── HIGHLIGHT MATCH ── */
+    mark {
+      background: transparent;
+      color: var(--gold);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">Shrenik <span>Balaji</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Calendar</a></li>
+      <li><a href="#">Music</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#" class="active">Request List</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Live Performances</div>
+
+    <h1>
+      Want to request<br>
+      a <em>song?</em>
+    </h1>
+
+    <p class="hero-sub">
+      Browse the full song list below, then request any track — two easy ways
+      to make it happen at the next show.
+    </p>
+  </section>
+
+  <div class="methods">
+
+    <div class="method-card">
+      <div class="method-num">01</div>
+
+      <h3>Venmo</h3>
+
+      <p>
+        Head to
+        <a
+          href="https://account.venmo.com/u/Shrenik-Balaji"
+          target="_blank"
+          rel="noopener"
+        >@Shrenik-Balaji on Venmo</a>
+        and include your song request in the payment note.
+      </p>
+    </div>
+
+    <div class="method-card">
+      <div class="method-num">02</div>
+
+      <h3>Tip Jar</h3>
+
+      <p>
+        Drop cash in the tip jar and let Shrenik know which song you'd like
+        to hear — he'll make it happen.
+      </p>
+    </div>
+
+  </div>
+
+  <section class="list-section">
+
+    <div class="list-header">
+      <h2>
+        Song List
+        <span id="total-label"></span>
+      </h2>
+
+      <div class="search-wrap">
+        <svg
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+
+        <input
+          type="text"
+          id="search"
+          placeholder="Search artists or songs…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+    </div>
+
+    <div id="result-info"></div>
+
+    <div id="song-list"></div>
+
+    <div id="empty">
+      <strong>No matches found</strong>
+      Try a different artist or song title.
+    </div>
+
+  </section>
+
+  <footer>
+    &copy; <span id="yr"></span> Shrenik Balaji
+    &nbsp;·&nbsp;
+    <a href="#">shrenikbalajimusic.com</a>
+  </footer>
+
+<script>
+const SONGS = [
+  { artist: "Allison Krauss", songs: ["Ghost in This House", "The Lucky One", "I'll Fly Away"] },
+  { artist: "Allman Brothers", songs: ["Midnight Rider", "Blue Sky", "Melissa", "Rambling Man", "Whipping Post", "One Way Out"] },
+  { artist: "Beatles", songs: ["A Day in the Life", "Help", "Get Back", "Here Comes the Sun", "Norwegian Wood", "Rocky Raccoon", "Two of Us", "Love Me Do", "I Saw Her Standing There", "Don't Let Me Down", "Hey Jude", "Something", "Let It Be", "Come Together"] },
+  { artist: "Ben Harper", songs: ["Burn One Down", "Steal My Kisses"] },
+  { artist: "Bill Withers", songs: ["Ain't No Sunshine", "Use Me"] },
+  { artist: "Billy Joel", songs: ["Piano Man"] },
+  { artist: "Billy Strings", songs: ["Dust in a Baggie", "California Sober", "Taking Water"] },
+  { artist: "Black Crowes", songs: ["She Talks to Angels", "Hard to Handle"] },
+  { artist: "Bob Dylan", songs: ["Blowin' in the Wind", "Don't Think Twice It's All Right", "It Ain't Me Babe", "It's All Over Now Baby Blue", "Lay Lady Lay", "Rainy Day Women #12 & 35", "Mr. Tambourine Man", "Queen Jane Approximately", "Like a Rolling Stone", "Tangled Up in Blue", "I Shall Be Released", "Simple Twist of Fate"] },
+  { artist: "Bob Marley", songs: ["Three Little Birds", "Redemption Song", "No Woman No Cry", "Jammin'", "I Shot the Sheriff", "Waiting in Vain", "Natural Mystic", "Stir It Up", "Get Up Stand Up", "Soul Rebel", "One Drop"] },
+  { artist: "Bob Seger", songs: ["Still the Same", "Turn the Page", "Against the Wind", "Old Time Rock and Roll"] },
+  { artist: "Bruce Springsteen", songs: ["I'm on Fire"] },
+  { artist: "California Honey Drops", songs: ["When It Was Wrong", "Don't Let the Green Grass Fool Ya", "Sit Down on It"] },
+  { artist: "CCR", songs: ["Fortunate Son", "Bad Moon Rising", "Proud Mary", "Have You Ever Seen the Rain", "Midnight Special", "Lodi", "Down on the Corner"] },
+  { artist: "Chappell Roan", songs: ["Pink Pony Club"] },
+  { artist: "Chris Isaak", songs: ["Wicked Game"] },
+  { artist: "Chris Stapleton", songs: ["Tennessee Whiskey", "Starting Over", "Traveler"] },
+  { artist: "Coldplay", songs: ["Yellow"] },
+  { artist: "Counting Crows", songs: ["Long December", "Mr. Jones"] },
+  { artist: "Cranberries", songs: ["Zombie", "Linger", "Dreams"] },
+  { artist: "Daft Punk", songs: ["Get Lucky"] },
+  { artist: "David Bowie", songs: ["Space Oddity"] },
+  { artist: "Dire Straits", songs: ["Sultans of Swing", "Romeo and Juliet"] },
+  { artist: "Dolly Parton", songs: ["9 to 5", "Jolene"] },
+  { artist: "The Doors", songs: ["L.A. Woman", "Riders on the Storm", "Love Me Two Times", "People Are Strange", "Light My Fire"] },
+  { artist: "Eagles", songs: ["Peaceful Easy Feeling", "Hotel California", "Take It Easy"] },
+  { artist: "Ed Sheeran", songs: ["Thinking Out Loud"] },
+  { artist: "Edward Sharpe", songs: ["Home"] },
+  { artist: "Elvis Presley", songs: ["Suspicious Minds", "I Can't Help Falling in Love With You", "Hound Dog", "Jailhouse Rock"] },
+  { artist: "The Expendables", songs: ["Bowl for Two"] },
+  { artist: "Fleetwood Mac", songs: ["Dreams", "Gold Dust Woman", "Landslide", "Rhiannon"] },
+  { artist: "Frank Sinatra", songs: ["Fly Me to the Moon", "My Way"] },
+  { artist: "Garth Brooks", songs: ["Friends in Low Places"] },
+  { artist: "Gillian Welch", songs: ["Orphan Girl", "Revelator", "Look at Miss Ohio"] },
+  { artist: "Gin Blossoms", songs: ["Hey Jealousy"] },
+  { artist: "Grateful Dead", songs: ["Every song"] },
+  { artist: "Green Day", songs: ["When I Come Around", "Boulevard of Broken Dreams", "Good Riddance (Time of Your Life)"] },
+  { artist: "Guns N' Roses", songs: ["Sweet Child O' Mine", "Paradise City", "Patience"] },
+  { artist: "Jack Johnson", songs: ["Upside Down", "Sitting, Waiting, Wishing", "Banana Pancakes", "Better Together"] },
+  { artist: "Incubus", songs: ["Drive"] },
+  { artist: "James Taylor", songs: ["You've Got a Friend", "Fire and Rain", "Country Road", "Carolina in My Mind"] },
+  { artist: "Jimi Hendrix", songs: ["All Along the Watchtower", "Castles Made of Sand", "Hey Joe", "Purple Haze"] },
+  { artist: "Jimmy Buffett", songs: ["A Pirate Looks at 40", "Margaritaville", "Cheeseburger in Paradise"] },
+  { artist: "John Lennon", songs: ["Imagine"] },
+  { artist: "John Mayer", songs: ["Waiting on the World to Change"] },
+  { artist: "John Mellencamp", songs: ["Pink Houses", "Small Town"] },
+  { artist: "Johnny Cash", songs: ["Walk the Line", "Ring of Fire", "Jackson", "Sunday Mornin' Comin' Down", "I've Been Everywhere", "Hurt", "A Boy Named Sue", "Big River", "Folsom Prison Blues"] },
+  { artist: "Justin Timberlake", songs: ["Can't Stop the Feeling"] },
+  { artist: "Led Zeppelin", songs: ["Tangerine", "Going to California", "Ramble On"] },
+  { artist: "Leonard Cohen", songs: ["Hallelujah"] },
+  { artist: "Little Feat", songs: ["Willin'"] },
+  { artist: "Louis Armstrong", songs: ["What a Wonderful World"] },
+  { artist: "Luke Combs", songs: ["Beautiful Crazy"] },
+  { artist: "Lumineers", songs: ["Angela", "Ophelia"] },
+  { artist: "Lynyrd Skynyrd", songs: ["Free Bird", "Sweet Home Alabama", "Tuesday's Gone", "Simple Man", "The Ballad of Curtis Loew"] },
+  { artist: "Matchbox Twenty", songs: ["3 A.M."] },
+  { artist: "Merle Haggard", songs: ["Sing Me Back Home", "Mama Tried", "Pancho and Lefty"] },
+  { artist: "Miley Cyrus", songs: ["Party in the USA", "Wrecking Ball"] },
+  { artist: "Neil Young", songs: ["Harvest Moon", "Heart of Gold", "Sugar Mountain", "Powderfinger", "Cortez the Killer", "Down by the River", "Rockin' in the Free World", "Hey Hey My My", "Cinnamon Girl", "After the Gold Rush", "Old Man"] },
+  { artist: "Nirvana", songs: ["Smells Like Teen Spirit", "Something in the Way", "All Apologies", "Where Did You Sleep Last Night", "Polly"] },
+  { artist: "Oasis", songs: ["Wonderwall", "Champagne Supernova"] },
+  { artist: "Paul Simon", songs: ["Homeward Bound", "The Sound of Silence", "Me and Julio Down by the Schoolyard"] },
+  { artist: "Phish", songs: ["Back on the Train", "Possum", "Yamar", "Wolfman's Brother", "Gumbo", "Sand", "Sample in a Jar", "Waste", "Farmhouse", "Character Zero"] },
+  { artist: "Pink Floyd", songs: ["Wish You Were Here", "Breathe", "Fearless", "Comfortably Numb", "Time", "Money", "Brain Damage", "Fat Old Sun"] },
+  { artist: "The Police", songs: ["So Lonely"] },
+  { artist: "The Proclaimers", songs: ["500 Miles"] },
+  { artist: "Railroad Earth", songs: ["Mighty River", "Chasing a Rainbow", "Bird in a House", "Elko"] },
+  { artist: "Ray LaMontagne", songs: ["Jolene"] },
+  { artist: "Red Hot Chili Peppers", songs: ["Californication", "Under the Bridge"] },
+  { artist: "Rolling Stones", songs: ["Wild Horses", "(I Can't Get No) Satisfaction", "Dead Flowers", "Sympathy for the Devil", "Paint It Black", "Angie", "You Can't Always Get What You Want"] },
+  { artist: "Rupert Holmes", songs: ["Escape (The Piña Colada Song)"] },
+  { artist: "Smashing Pumpkins", songs: ["1979", "Today"] },
+  { artist: "Steely Dan", songs: ["Deacon Blues"] },
+  { artist: "Steve Miller Band", songs: ["Take the Money and Run", "The Joker", "Jet Airliner"] },
+  { artist: "Stevie Ray Vaughan", songs: ["Pride and Joy"] },
+  { artist: "Stevie Wonder", songs: ["Boogie On Reggae Woman", "Superstition", "I Just Called to Say I Love You"] },
+  { artist: "Stone Temple Pilots", songs: ["Plush"] },
+  { artist: "Sublime", songs: ["What I Got", "Santeria", "Badfish"] },
+  { artist: "Taj Mahal", songs: ["Lovin' in My Baby's Eyes"] },
+  { artist: "Taylor Swift", songs: ["Bejeweled"] },
+  { artist: "Talking Heads", songs: ["Psycho Killer", "This Must Be the Place", "Take Me to the River", "Burning Down the House"] },
+  { artist: "Tom Petty", songs: ["American Girl", "Breakdown", "You Don't Know How It Feels", "Learning to Fly", "Mary Jane's Last Dance", "Wildflowers", "Free Fallin'", "I Won't Back Down"] },
+  { artist: "Tracy Chapman", songs: ["Fast Car", "Give Me One Reason"] },
+  { artist: "Traffic", songs: ["Dear Mr. Fantasy", "The Low Spark of High Heeled Boys"] },
+  { artist: "Train", songs: ["Hey Soul Sister"] },
+  { artist: "Tyler Childers", songs: ["All Your'n", "Feathered Indians", "Jersey Giant", "Nose on the Grindstone", "Whitehouse Road"] },
+  { artist: "Van Morrison", songs: ["Brown Eyed Girl", "Into the Mystic", "Tupelo Honey", "Moondance", "Days Like This", "Sweet Thing"] },
+  { artist: "Velvet Underground", songs: ["Pale Blue Eyes"] },
+  { artist: "Zac Brown Band", songs: ["Colder Weather", "Knee Deep", "Chicken Fried", "Free"] },
+  { artist: "Zach Bryan", songs: ["Something in the Orange"] },
+];
+
+// Total song count
+const totalSongs = SONGS.reduce(
+  (total, group) => total + group.songs.length,
+  0
+);
+
+document.getElementById('total-label').textContent =
+  `— ${SONGS.length} artists · ${totalSongs} songs`;
+
+document.getElementById('yr').textContent =
+  new Date().getFullYear();
+
+const listEl = document.getElementById('song-list');
+const searchEl = document.getElementById('search');
+const emptyEl = document.getElementById('empty');
+const resultEl = document.getElementById('result-info');
+
+function esc(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function highlight(str, q) {
+  if (!q) return esc(str);
+
+  const re = new RegExp(
+    `(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`,
+    'gi'
+  );
+
+  return esc(str).replace(re, '<mark>$1</mark>');
+}
+
+function render(query) {
+  const q = query.trim().toLowerCase();
+
+  listEl.innerHTML = '';
+
+  let totalVisible = 0;
+  let artistsVisible = 0;
+
+  SONGS.forEach(group => {
+    const artistMatch =
+      !q || group.artist.toLowerCase().includes(q);
+
+    const filteredSongs = q
+      ? group.songs.filter(
+          song =>
+            song.toLowerCase().includes(q) ||
+            artistMatch
+        )
+      : group.songs;
+
+    if (!filteredSongs.length && !artistMatch) return;
+
+    const showSongs = artistMatch
+      ? group.songs
+      : filteredSongs;
+
+    if (!showSongs.length) return;
+
+    totalVisible += showSongs.length;
+    artistsVisible++;
+
+    const groupEl = document.createElement('div');
+
+    groupEl.className =
+      'artist-group' + (q ? ' open' : '');
+
+    const header = document.createElement('div');
+
+    header.className = 'artist-header';
+
+    header.innerHTML = `
+      <span class="artist-name">
+        ${highlight(group.artist, q)}
+      </span>
+
+      <span class="artist-count">
+        ${showSongs.length}
+        song${showSongs.length !== 1 ? 's' : ''}
+      </span>
+
+      <svg
+        class="artist-chevron"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    `;
+
+    header.addEventListener('click', () => {
+      groupEl.classList.toggle('open');
+    });
+
+    const songsEl = document.createElement('div');
+
+    songsEl.className = 'songs-list';
+
+    showSongs.forEach(song => {
+      const item = document.createElement('div');
+
+      item.className = 'song-item';
+
+      item.innerHTML = `
+        <span class="song-dot"></span>
+        <span class="song-title">
+          ${highlight(song, q)}
+        </span>
+      `;
+
+      songsEl.appendChild(item);
+    });
+
+    groupEl.appendChild(header);
+    groupEl.appendChild(songsEl);
+
+    listEl.appendChild(groupEl);
+  });
+
+  emptyEl.style.display =
+    artistsVisible === 0 ? 'block' : 'none';
+
+  if (q && artistsVisible > 0) {
+    resultEl.innerHTML =
+      `<em>${totalVisible}</em> song` +
+      `${totalVisible !== 1 ? 's' : ''} across ` +
+      `<em>${artistsVisible}</em> artist` +
+      `${artistsVisible !== 1 ? 's' : ''} matching ` +
+      `"<em>${esc(query.trim())}</em>"`;
+  } else {
+    resultEl.innerHTML = '';
+  }
+}
+
+searchEl.addEventListener('input', () => {
+  render(searchEl.value);
+});
+
+render('');
+</script>
+
+</body>
+</html>
