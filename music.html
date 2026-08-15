@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music — Shrenik Balaji</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #F6F1E7;
+            --surface: #FFFDF8;
+            --border: #D9D4C8;
+            --orange: #2F5D3A;
+            --orange-dark: #23482D;
+            --green: #8FA77D;
+            --text: #24352A;
+            --muted: #667066;
+            --spotify: #1DB954;
+            --apple: #E53935;
+            --radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 60px;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(246, 241, 231, 0.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            color: var(--text);
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .nav-logo span {
+            color: var(--orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--orange);
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 72px 32px 48px;
+        }
+
+        .eyebrow {
+            margin-bottom: 16px;
+            color: var(--orange);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin-bottom: 20px;
+            color: var(--text);
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.08;
+        }
+
+        .hero h1 em {
+            color: var(--orange);
+            font-style: italic;
+        }
+
+        .hero p {
+            max-width: 560px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        /* MUSIC */
+        .music-section {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 32px 80px;
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* SONG CARDS */
+        .song-card {
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: 0.2s ease;
+        }
+
+        .song-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--orange-dark);
+            box-shadow: 0 12px 30px rgba(36, 53, 42, 0.08);
+        }
+
+        .song-art {
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--orange), var(--green));
+        }
+
+        .song-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+
+        .apple-link img {
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+
+        /* SONG INFO */
+        .song-info {
+            padding: 22px;
+        }
+
+        .song-number {
+            margin-bottom: 7px;
+            color: var(--orange);
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .song-title {
+            margin-bottom: 8px;
+            color: var(--text);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .song-description {
+            min-height: 55px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.65;
+        }
+
+        /* STREAMING ICONS */
+        .streaming-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stream-link {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: 0.18s ease;
+        }
+
+        .stream-link:hover {
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        .stream-link svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .spotify-link {
+            background: var(--spotify);
+            color: #000;
+        }
+
+        .spotify-link:hover {
+            box-shadow: 0 5px 14px rgba(29, 185, 84, 0.3);
+        }
+
+        .apple-link {
+            background: #FA2D48;
+            color: #fff;
+        }
+
+        .apple-link:hover {
+            box-shadow: 0 5px 14px rgba(229, 57, 53, 0.3);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 32px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
+        }
+
+        footer a {
+            color: var(--orange-dark);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--orange);
+        }
+
+        /* MOBILE */
+        @media (max-width: 760px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 48px 20px 36px;
+            }
+
+            .music-section {
+                padding: 0 20px 60px;
+            }
+
+            .music-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .song-art {
+                height: 230px;
+            }
+        }
+
+        @media (min-width: 761px) and (max-width: 900px) {
+            .music-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav> <a class="nav-logo" href="home.html"> Shrenik <span>Balaji</span> </a>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="music.html" class="active">Music</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="request-list.html">Request List</a></li>
+        </ul>
+
+    </nav>
+    <section class="hero">
+        <div class="eyebrow">Original Music</div>
+        <h1>
+            Listen to<br>
+            <em>Shrenik</em> Balaji
+        </h1>
+
+        <p>
+            Explore Shrenik's original music and listen on your favorite
+            streaming platform.
+        </p>
+
+    </section>
+    <section class="music-section">
+        <div class="music-grid">
+
+            <!-- PLAY ALONG -->
+
+            <article class="song-card">
+
+                <div class="song-art">
+                    <img src="images/play-along.png" alt="Song artwork">
+                </div>
+
+                <div class="song-info">
+
+                    <div class="song-number">Original · 01</div>
+
+                    <h2 class="song-title">Play Along</h2>
+
+                    <p class="song-description">
+                        song description if you want it
+                    </p>
+
+                    <div class="streaming-links">
+
+                        <a class="stream-link spotify-link" href="https://open.spotify.com/album/6dIQYcPVrtqCg81kmaL0Os"
+                            target="_blank" rel="noopener" aria-label="Play Along on Spotify">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path d="M7 9.5C10.5 8.5 14.5 8.7 17.5 10" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M7.5 12.5C10.5 11.7 13.5 11.9 16.5 13" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M8.5 15.2C10.8 14.7 13 14.9 15 15.7" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </a>
+
+                        <a class="stream-link apple-link"
+                            href="https://music.apple.com/us/album/play-along-single/1760504727" target="_blank"
+                            rel="noopener" aria-label="Listen on Apple Music">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_Music_icon.svg"
+                                alt="Apple Music">
+                        </a>
+
+                    </div>
+                </div>
+            </article>
+
+
+            <!-- THIS TIME -->
+
+            <article class="song-card">
+
+                <div class="song-art">
+                    <img src="images/this-time.png" alt="Song artwork">
+                </div>
+
+                <div class="song-info">
+
+                    <div class="song-number">Original · 02</div>
+
+                    <h2 class="song-title">This Time</h2>
+
+                    <p class="song-description">
+                        song description if you want it
+                    </p>
+
+                    <div class="streaming-links">
+
+                        <a class="stream-link spotify-link" href="https://open.spotify.com/track/1dPUe2PL7ZqoE5yfjMlCHY"
+                            target="_blank" rel="noopener" aria-label="This Time on Spotify">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path d="M7 9.5C10.5 8.5 14.5 8.7 17.5 10" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M7.5 12.5C10.5 11.7 13.5 11.9 16.5 13" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M8.5 15.2C10.8 14.7 13 14.9 15 15.7" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </a>
+
+                        <a class="stream-link apple-link"
+                            href="https://music.apple.com/us/album/this-time/1760526532?i=1760526539" target="_blank"
+                            rel="noopener" aria-label="Listen on Apple Music">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_Music_icon.svg"
+                                alt="Apple Music">
+                        </a>
+
+                    </div>
+                </div>
+            </article>
+
+
+            <!-- FEEL BETTER SOON -->
+
+            <article class="song-card">
+
+                <div class="song-art">
+                    <img src="images/feel-better-soon.png" alt="Song artwork">
+                </div>
+
+                <div class="song-info">
+
+                    <div class="song-number">Original · 03</div>
+
+                    <h2 class="song-title">feel better soon</h2>
+
+                    <p class="song-description">
+                        song description if you want it
+                    </p>
+
+                    <div class="streaming-links">
+
+                        <a class="stream-link spotify-link" href="https://open.spotify.com/track/5UY5VrWThEcyfR66HS3O83"
+                            target="_blank" rel="noopener" aria-label="Feel Better Soon on Spotify">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path d="M7 9.5C10.5 8.5 14.5 8.7 17.5 10" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M7.5 12.5C10.5 11.7 13.5 11.9 16.5 13" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M8.5 15.2C10.8 14.7 13 14.9 15 15.7" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </a>
+
+                        <a class="stream-link apple-link"
+                            href="https://music.apple.com/us/album/feel-better-soon/1833705239?i=1833705241"
+                            target="_blank" rel="noopener" aria-label="Listen on Apple Music">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_Music_icon.svg"
+                                alt="Apple Music">
+                        </a>
+
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+    </section>
+    <footer> &copy; <span id="year"></span> Shrenik Balaji &nbsp;·&nbsp; <a href="home.html">shrenikbalajimusic.com</a>
+    </footer>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
